@@ -1,6 +1,6 @@
 
 
-import newconnect4 
+import connect4_console_AI 
 import connectfour
 
 #Console    
@@ -9,14 +9,14 @@ def play_game(new_game:'ConnectFourGameState'):
     '''Plays the game (console)
     '''
     print('Welcome to connect four!\n')
-    newconnect4.print_board(new_game)
+    connect4_console_AI.print_board(new_game)
     
     while connectfour.winning_player(new_game) == connectfour.NONE:
-        newconnect4.return_turn(new_game)
-        new_game = newconnect4.drop_or_pop(new_game, newconnect4.input_words())
-        newconnect4.print_board(new_game)       
+        connect4_console_AI.return_turn(new_game)
+        new_game = connect4_console_AI.drop_or_pop(new_game, connect4_console_AI.input_words())
+        connect4_console_AI.print_board(new_game)       
             
-    newconnect4.print_winning_player(new_game) 
+    connect4_console_AI.print_winning_player(new_game) 
 
 
 
