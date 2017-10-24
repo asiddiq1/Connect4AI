@@ -1,5 +1,5 @@
 import connect_socket 
-import newconnect4
+import connect4_console_AI
 import connectfour 
 
 #Protocol 
@@ -51,10 +51,10 @@ def user_move(socketcon, new_game):
     '''Client makes the move
     '''
     response_ready = connect_socket.recieve_message(socketcon)
-    while newconnect4.return_color(new_game) == 'R':
-         command_input = newconnect4.input_words() 
+    while connect4_console_AI.return_color(new_game) == 'R':
+         command_input = connect4_console_AI.input_words() 
          join_command = ' '.join(command_input).upper()
-         new_game = newconnect4.drop_or_pop(new_game, command_input)
+         new_game = connect4_console_AI.drop_or_pop(new_game, command_input)
     connect_socket.send_message(socketcon, join_command)
     return new_game 
 
@@ -71,7 +71,7 @@ def server_response(socketcon, new_game):
         return new_game
 
     elif response.split('_')[0] == 'WINNER':
-        newconnect4.print_winning_player(new_game) 
+        connect4_console_AI.print_winning_player(new_game) 
             
 
 
@@ -80,7 +80,7 @@ def AI_move(new_game, socketcon):
     '''
 
     response = connect_socket.recieve_message(socketcon)
-    new_game = newconnect4.drop_or_pop(new_game, response.split())
+    new_game = connect4_console_AI.drop_or_pop(new_game, response.split())
     return new_game 
 
     
@@ -90,16 +90,16 @@ def play_GAME(socketcon, new_game):
 
         
     print('\nWELCOME TO CONNECT FOUR!') 
-    newconnect4.print_board(new_game) 
+    connect4_console_AI.print_board(new_game) 
 
     while connectfour.winning_player(new_game) == connectfour.NONE:
         
-        newconnect4.return_turn(new_game) 
+        connect4_console_AI.return_turn(new_game) 
         new_game = user_move(socketcon, new_game)
         server_response(socketcon, new_game)
         new_game = AI_move(new_game, socketcon)
-        newconnect4.print_board(new_game) 
-    newconnect4.print_winning_player(new_game)
+        connect4_console_AI.print_board(new_game) 
+    connect4_console_AI.print_winning_player(new_game)
     connect_socket.close_sockets(socketcon)
 
 
